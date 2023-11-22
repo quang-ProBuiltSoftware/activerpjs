@@ -41,7 +41,7 @@ function App() {
       const reportJson = JSON.stringify(report.definition);
 
       // Create a Blob from the JSON string
-      const blob = new Blob([reportJson], { type: "application/json" });
+      const blob = new Blob([reportJson], { type: "application/json" }); 
 
       // Create a link element and trigger a download
       const downloadLink = document.createElement("a");
