@@ -1,21 +1,16 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://developer.mescius.com/activereportsjs/demos/resource/themes/orange-ui.css");
+@import url("https://developer.mescius.com/activereportsjs/demos/resource/themes/orange-viewer.css");
+
+@import "@grapecity/activereports/styles/ar-js-ui.css";
+@import "@grapecity/activereports/styles/ar-js-designer.css";
+
+#designer-host {
+  width: 100%;
+  height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.homepage{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 200px;
+#viewer-host {
+  margin: 0 auto;
+  width: 100%;
+  height: 100vh;
 }

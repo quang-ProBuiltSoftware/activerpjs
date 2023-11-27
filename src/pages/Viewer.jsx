@@ -1,82 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { Viewer as ActiveReportsViewer } from "@grapecity/activereports-react";
 import "@grapecity/activereports/pdfexport";
 import "@grapecity/activereports/htmlexport";
 import "@grapecity/activereports/tabulardataexport";
 
+async function loadReport() {
+ const reportResponse = await fetch("CustomerList.rdlx-json");
+
+  const report = await reportResponse.json();
+  return report;
+}
+
 const Viewer = () => {
-  const [selectedReport, setSelectedReport] = useState(null);
-  const [viewerVisible, setViewerVisible] = useState(true);
+  const viewerRef = React.useRef();
 
-  const exportsSettings = {
-    pdf: {
-      title: "ActiveReportsJS Sample",
-      author: "GrapeCity",
-      subject: "Web Reporting",
-      keywords: "reporting, sample",
-      userPassword: "pwd",
-      ownerPassword: "ownerPwd",
-      printing: "none",
-      copying: false,
-      modifying: false,
-      annotating: false,
-      contentAccessibility: false,
-      documentAssembly: false,
-      pdfVersion: "1.7",
-      autoPrint: true,
-      filename: "ActiveReportsJS-Sample.pdf",
-    },
-    html: {
-      title: "ActiveReportsJS Sample",
-      filename: "ActiveReportsJS-Sample.html",
-      autoPrint: true,
-      multiPage: true,
-      embedImages: "external",
-      outputType: "html",
-    },
-  };
-  const availableExports = ["pdf", "html", "tabular-data"];
+  React.useEffect(() => {
+    async function openReport() {
+      const report = await loadReport();
+      report.DataSources[0].ConnectionProperties.ConnectString = `endpoint=${process.env.REACT_APP_BASE_URI};Header$AK=${process.env.REACT_APP_AK};Header$CID=${process.env.REACT_APP_CID};Header$User=Quang;Header$ClientPlatform=Edge`
+      viewerRef.current.Viewer.open(report);
+    }
+    openReport();
+  }, []);
 
-  const reports = [
-    { name: "Report 1", path: "../reports-testing/testing.rdlx-json" },
-    { name: "Report 3", path: "../reports-testing/testing3.rdlx-json" },
-  ];
-
-  const handleReportClick = (report) => {
-    setSelectedReport(report);
-    setViewerVisible(true); // Show the Viewer when a report is selected
-  };
-
-  const handleCloseViewer = () => {
-    setViewerVisible(false); // Hide the Viewer
-  };
   return (
-    <div>
-      <h1>Testing Viewer Page</h1>
-      <ul>
-        {reports.map((report, index) => (
-          <li
-            style={{ margin: "10px", cursor: "pointer" }}
-            key={index}
-            onClick={() => handleReportClick(report)}
-          >
-            {report.name}
-          </li>
-        ))}
-      </ul>
-
-      {/* ActiveReports Viewer */}
-      {selectedReport && viewerVisible && (
-        <div key={selectedReport.path}>
-          <h2>{selectedReport.name}</h2>
-          <button onClick={handleCloseViewer}>Close Viewer</button>
-          <ActiveReportsViewer
-            report={{ Uri: selectedReport.path }}
-            exportsSettings={exportsSettings}
-            availableExports={availableExports}
-          />
-        </div>
-      )}
+    <div id="viewer-host">
+      <ActiveReportsViewer ref={viewerRef} />
     </div>
   );
 };
