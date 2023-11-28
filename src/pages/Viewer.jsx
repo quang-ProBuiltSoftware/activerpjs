@@ -4,24 +4,49 @@ import "@grapecity/activereports/pdfexport";
 import "@grapecity/activereports/htmlexport";
 import "@grapecity/activereports/tabulardataexport";
 
-async function loadReport() {
- const reportResponse = await fetch("CustomerList.rdlx-json");
-
-  const report = await reportResponse.json();
-  return report;
-}
-
 const Viewer = () => {
   const viewerRef = React.useRef();
+  const [currentReportVersion, setCurrentReportVersion] = React.useState('');
+
+  async function loadReport(size) {
+    const reportResponse = await fetch(`CustomerList${size}.rdlx-json`);
+    const report = await reportResponse.json();
+    return report;
+  }
+
+  function updateToolbar() {
+    var designButton = {
+      key: "$switchMode",
+      text: "Switch Mode",
+      enabled: true,
+      action: () => {
+        // Toggle between versions (assuming you have only two versions)
+        const nextVersion = currentReportVersion === '' ? '_w' : '';
+        setCurrentReportVersion(nextVersion);
+
+        // Load the new version of the report
+        openReport(nextVersion);
+      },
+    };
+    viewerRef.current.toolbar.addItem(designButton);
+  }
+
+  async function openReport(version) {
+    const report = await loadReport(version);
+    report.DataSources[0].ConnectionProperties.ConnectString = `endpoint=${process.env.REACT_APP_BASE_URI};Header$AK=${process.env.REACT_APP_AK};Header$CID=${process.env.REACT_APP_CID};Header$User=${process.env.REACT_APP_USER};Header$ClientPlatform=Edge`;
+    viewerRef.current.Viewer.open(report);
+  }
 
   React.useEffect(() => {
-    async function openReport() {
-      const report = await loadReport();
-      report.DataSources[0].ConnectionProperties.ConnectString = `endpoint=${process.env.REACT_APP_BASE_URI};Header$AK=${process.env.REACT_APP_AK};Header$CID=${process.env.REACT_APP_CID};Header$User=Quang;Header$ClientPlatform=Edge`
-      viewerRef.current.Viewer.open(report);
+    async function initializeViewer() {
+      updateToolbar();
+      // Initially load the default version of the report
+      openReport(currentReportVersion);
     }
-    openReport();
-  }, []);
+
+    initializeViewer();
+    // eslint-disable-next-line
+  }, [currentReportVersion]);
 
   return (
     <div id="viewer-host">

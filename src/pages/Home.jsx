@@ -5,7 +5,7 @@ const Home = () => {
   return (
    <div className="homepage">
         <h2>HOME</h2>
-        <div className="flex">
+        <div style={{display:'flex',gap:'20px'}}>
             <Link to="/designer">Designer</Link>
             <Link to="/viewer">Viewer</Link>
         </div>

@@ -96,13 +96,14 @@ const DesignerPage = () => {
     var designButton = {
       key: "$openDesigner",
       text: "Edit in Designer",
-      iconCssClass: "mdi mdi-pencil",
+      // iconCssClass: "mdi mdi-pencil",
       enabled: true,
       action: () => {
         setDesignerVisible(true);
       },
     };
     viewerRef.current.toolbar.addItem(designButton);
+    //this is the order of the buttons on the toolbar
     viewerRef.current.toolbar.updateLayout({
       default: [
         "$openDesigner",
