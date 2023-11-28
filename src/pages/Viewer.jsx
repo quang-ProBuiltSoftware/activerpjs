@@ -6,12 +6,15 @@ import "@grapecity/activereports/tabulardataexport";
 
 const Viewer = () => {
   const viewerRef = React.useRef();
-  const [currentReportVersion, setCurrentReportVersion] = React.useState('');
+  const [currentReportVersion, setCurrentReportVersion] = React.useState("");
 
   async function loadReport(size) {
-    const reportResponse = await fetch(`CustomerList${size}.rdlx-json`);
-    const report = await reportResponse.json();
-    return report;
+      const reportResponse = await fetch(
+        `CustomerList${size}.rdlx-json`
+      );
+      const report = await reportResponse.json();
+
+      return report;
   }
 
   function updateToolbar() {
@@ -21,7 +24,7 @@ const Viewer = () => {
       enabled: true,
       action: () => {
         // Toggle between versions (assuming you have only two versions)
-        const nextVersion = currentReportVersion === '' ? '_w' : '';
+        const nextVersion = currentReportVersion === "" ? "_w" : "";
         setCurrentReportVersion(nextVersion);
 
         // Load the new version of the report
@@ -31,8 +34,8 @@ const Viewer = () => {
     viewerRef.current.toolbar.addItem(designButton);
   }
 
-  async function openReport(version) {
-    const report = await loadReport(version);
+  async function openReport(size) {
+    const report = await loadReport(size);
     report.DataSources[0].ConnectionProperties.ConnectString = `endpoint=${process.env.REACT_APP_BASE_URI};Header$AK=${process.env.REACT_APP_AK};Header$CID=${process.env.REACT_APP_CID};Header$User=${process.env.REACT_APP_USER};Header$ClientPlatform=Edge`;
     viewerRef.current.Viewer.open(report);
   }

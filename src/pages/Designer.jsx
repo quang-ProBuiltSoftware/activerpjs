@@ -51,32 +51,31 @@ const DesignerPage = () => {
   //THIS IS FOR SELECTING REPORTS FROM LOCAL
   const openReportFromFile = (file) => {
     const reader = new FileReader();
-
+  
     return new Promise((resolve, reject) => {
       reader.onload = (event) => {
         const reportDefinition = event.target.result;
-
-        // Assuming 'viewerRef' is a reference to the Viewer component
-        if (viewerRef.current) {
-          // Open the report using the Viewer's open method
-          viewerRef.current.Viewer.open(JSON.parse(reportDefinition));
+        const parsedReport = JSON.parse(reportDefinition);
+  
+        if (designerRef.current) {
+          // Update the report using the setReport method
+          designerRef.current.setReport({definition: parsedReport});
           resolve();
         } else {
-          reject(new Error("Viewer reference is not available."));
+          reject(new Error("Designer reference is not available."));
         }
       };
-
+  
       reader.onerror = (event) => {
-        console.error("Error reading file:", event.target.error);
+        console.error('Error reading file:', event.target.error);
         reject(event.target.error);
       };
-
+  
       reader.readAsText(file);
     });
   };
 
-  // eslint-disable-next-line
-  const onFileInputChange = () => {
+  function onFileInputChange() {
     const fileInput = fileInputRef.current;
     if (fileInput && fileInput.files.length > 0) {
       const file = fileInput.files[0];
@@ -91,6 +90,8 @@ const DesignerPage = () => {
         });
     }
   };
+  
+  /////////
 
   function updateToolbar(){
     var designButton = {
@@ -151,15 +152,15 @@ const DesignerPage = () => {
         id="designer-host"
         style={{ display: designerVisible ? "block" : "none" }}
       >
+        <input type="file" ref={fileInputRef} onChange={onFileInputChange}></input>
         <Designer
           ref={designerRef}
-          report={{ id: "CustomerList.rdlx-json" }}
+          // report={report}
           onRender={onReportPreview}
           onSave={onSaveAs}
           onSaveAs={onSaveAs}
         />
       </div>
-      {/* <input type="file" ref={fileInputRef} onClick={onFileInputChange}></input> */}
     </div>
   );
 };
