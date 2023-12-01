@@ -11,8 +11,8 @@ const Home = () => {
   ];
 
   return (
-    <div className="homepage">
-      <h1>Reports List</h1>
+    <div>
+      <h1 className="text-3xl font-bold underline">Reports List</h1>
       <ul>
         {reports.map(report => (
           <li key={report.id}>
