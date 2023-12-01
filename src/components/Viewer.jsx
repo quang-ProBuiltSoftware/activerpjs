@@ -36,7 +36,7 @@ const Viewer = () => {
 
   async function openReport(size) {
     const report = await loadReport(size);
-    report.DataSources[0].ConnectionProperties.ConnectString = `endpoint=${process.env.REACT_APP_BASE_URI};Header$AK=${process.env.REACT_APP_AK};Header$CID=${process.env.REACT_APP_CID};Header$User=${process.env.REACT_APP_USER};Header$ClientPlatform=Edge`;
+    report.DataSources[0].ConnectionProperties.ConnectString = `endpoint=${process.env.REACT_APP_BASE_URI};Header$AK=${process.env.REACT_APP_AK};Header$CID=${process.env.REACT_APP_CID};Header$User=${process.env.REACT_APP_USER};Header$ClientPlatform=All`;
     viewerRef.current.Viewer.open(report);
   }
 

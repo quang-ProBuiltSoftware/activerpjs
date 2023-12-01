@@ -1,8 +1,5 @@
 import React, { useRef } from "react";
 import { Viewer, Designer } from "@grapecity/activereports-react";
-import "@grapecity/activereports/styles/ar-js-ui.css";
-import "@grapecity/activereports/styles/ar-js-viewer.css";
-import "@grapecity/activereports/styles/ar-js-designer.css";
 
 const DesignerPage = () => {
   const viewerRef = React.useRef();
@@ -10,6 +7,7 @@ const DesignerPage = () => {
   const designerRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  //SAVING
   const onSaveAs = async () => {
     try {
       // Ensure that the designer is available
@@ -17,38 +15,30 @@ const DesignerPage = () => {
         console.error("Designer is not available.");
         return;
       }
-
       // Check if the designer is ready by waiting for a short time (adjust as needed)
       await new Promise((resolve) => setTimeout(resolve, 500));
-
       // Get the current report from the designer
       const report = await designerRef.current.getReport();
-
       // Convert the report to JSON string
       const reportJson = JSON.stringify(report.definition);
-
       // Create a Blob from the JSON string
       const blob = new Blob([reportJson], { type: "application/json" });
-
       // Create a link element and trigger a download
       const downloadLink = document.createElement("a");
       downloadLink.href = window.URL.createObjectURL(blob);
-
       // Set the file name (you can customize the file name here)
       downloadLink.download = "current-report.rdlx-json";
-
       // Append the link to the DOM, trigger the click event, and remove the link
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
-
-      console.log("Report saved successfully.");
     } catch (error) {
       console.error("Error saving report:", error);
     }
   };
+  //SAVING
 
-  //THIS IS FOR SELECTING REPORTS FROM LOCAL
+  //FOR SELECTING REPORTS FROM LOCAL
   const openReportFromFile = (file) => {
     const reader = new FileReader();
   
@@ -79,7 +69,6 @@ const DesignerPage = () => {
     const fileInput = fileInputRef.current;
     if (fileInput && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-
       // Call openReportFromFile and handle the promise if needed
       openReportFromFile(file)
         .then(() => {
@@ -90,14 +79,13 @@ const DesignerPage = () => {
         });
     }
   };
-  
-  /////////
+  //FOR SELECTING REPORTS FROM LOCAL
 
   function updateToolbar(){
     var designButton = {
       key: "$openDesigner",
       text: "Edit in Designer",
-      // iconCssClass: "mdi mdi-pencil",
+      iconCssClass: "mdi mdi-pencil",
       enabled: true,
       action: () => {
         setDesignerVisible(true);
@@ -127,14 +115,12 @@ const DesignerPage = () => {
     });
   }
 
-  function onReportPreview(report) {
+  function switchToPreview(report) {
     updateToolbar();
     // Modify the report with additional data
-    report.definition.DataSources[0].ConnectionProperties.ConnectString = `endpoint=${process.env.REACT_APP_BASE_URI};Header$AK=${process.env.REACT_APP_AK};Header$CID=${process.env.REACT_APP_CID};Header$User=Quang;Header$ClientPlatform=Edge`;
-
+    report.definition.DataSources[0].ConnectionProperties.ConnectString = `endpoint=${process.env.REACT_APP_BASE_URI};Header$AK=${process.env.REACT_APP_AK};Header$CID=${process.env.REACT_APP_CID};Header$User=${process.env.REACT_APP_USER};Header$ClientPlatform=All`;
     // Hide the Designer and show the Viewer
     setDesignerVisible(false);
-
     // Open the modified report in the Viewer
     viewerRef.current.Viewer.open(report.definition);
     return Promise.resolve();
@@ -155,7 +141,7 @@ const DesignerPage = () => {
         <input type="file" ref={fileInputRef} onChange={onFileInputChange}></input>
         <Designer
           ref={designerRef}
-          onRender={onReportPreview}
+          onRender={switchToPreview}
           onSave={onSaveAs}
           onSaveAs={onSaveAs}
         />

@@ -21,9 +21,6 @@
     "@babel/plugin-transform-private-property-in-object": "^7.23.3",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
-    "systemjs": "0.19.40",
-    "systemjs-plugin-babel": "0.0.25",
-    "systemjs-plugin-css": "0.1.37",
     "tailwindcss": "^3.3.5"
   },
   "scripts": {
