@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url("https://developer.mescius.com/activereportsjs/demos/resource/themes/orange-ui.css");
 @import url("https://developer.mescius.com/activereportsjs/demos/resource/themes/orange-viewer.css");
 

@@ -4,6 +4,12 @@
   "ReportParameters": [
     {
       "DataType": "String",
+      "DefaultValue": {
+        "DataSetReference": {
+          "DataSetName": "DataSet",
+          "ValueField": "State"
+        }
+      },
       "MultiValue": true,
       "Name": "State",
       "Prompt": "State",
@@ -491,10 +497,6 @@
             "Type": "dvchart",
             "Name": "Chart1",
             "ZIndex": 3,
-            "Visibility": {
-              "Hidden": "True",
-              "ToggleItem": "ShowChart"
-            },
             "DataSetName": "DataSet",
             "Filters": [
               {
@@ -712,27 +714,8 @@
                 "PlotChartSubtype": "Stacked"
               }
             ],
-            "Left": "1.6563in",
-            "Width": "5.3647in",
+            "Width": "4.1564in",
             "Height": "2.7395in"
-          },
-          {
-            "Type": "textbox",
-            "Name": "ShowChart",
-            "ZIndex": 4,
-            "CanGrow": true,
-            "KeepTogether": true,
-            "Value": "Show Chart",
-            "Style": {
-              "PaddingLeft": "2pt",
-              "PaddingRight": "2pt",
-              "PaddingTop": "2pt",
-              "PaddingBottom": "2pt"
-            },
-            "Left": "0.5in",
-            "Top": "0.0208in",
-            "Width": "1in",
-            "Height": "0.25in"
           }
         ]
       },

@@ -155,7 +155,6 @@ const DesignerPage = () => {
         <input type="file" ref={fileInputRef} onChange={onFileInputChange}></input>
         <Designer
           ref={designerRef}
-          // report={report}
           onRender={onReportPreview}
           onSave={onSaveAs}
           onSaveAs={onSaveAs}
