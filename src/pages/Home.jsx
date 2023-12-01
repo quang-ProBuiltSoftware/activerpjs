@@ -5,18 +5,23 @@ import DesignerPage from "../components/Designer";
 const Home = () => {
   // Dummy data for the list of reports (replace this with actual API fetching later)
   const reports = [
-    { id: 1, name: 'Report 1' },
-    { id: 2, name: 'Report 2' },
-    { id: 3, name: 'Report 3' },
+    { id: 1, name: "Report 1" },
+    { id: 2, name: "Report 2" },
+    { id: 3, name: "Report 3" },
   ];
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Reports List</h1>
-      <ul>
-        {reports.map(report => (
-          <li key={report.id}>
-            <Link to={`/designer/${report.id}`}>{report.name}</Link>
+    <div className="flex justify-start flex-col m-20">
+      <h1 className="text-3xl font-bold underline mb-4">Reports List</h1>
+      <ul className="list-none p-0">
+        {reports.map((report) => (
+          <li key={report.id} className="mb-2">
+            <Link
+              to={`/designer/${report.id}`}
+              className="text-blue-500 hover:underline"
+            >
+              {report.name}
+            </Link>
           </li>
         ))}
       </ul>
@@ -24,4 +29,4 @@ const Home = () => {
   );
 };
 
-export default Home
+export default Home;
