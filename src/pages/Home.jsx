@@ -59,6 +59,16 @@ const Home = () => {
                 </TableCell>
               </TableRow>
             ))}
+            <TableCell>
+              <Button
+                component={Link}
+                to={`/designer/new-report/P`}
+                variant="outlined"
+                color="primary"
+              >
+                New
+              </Button>
+            </TableCell>
           </TableBody>
         </Table>
       </TableContainer>
