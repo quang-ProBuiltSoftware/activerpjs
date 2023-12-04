@@ -1,31 +1,67 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchReportsList } from "../api";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Button,
+} from "@mui/material";
 
 const Home = () => {
-  // Dummy data for the list of reports (replace this with actual API fetching later)
-  const reports = [
-    { id: 1, name: "Report 1" },
-    { id: 2, name: "Report 2" },
-    { id: 3, name: "Report 3" },
-  ];
+  const [reports, setReports] = useState([]);
+
+  const getAllReports = async () => {
+    try {
+      const res = await fetchReportsList();
+      setReports(res.data.records);
+    } catch (error) {
+      console.error("Error fetching reports:", error);
+    }
+  };
+
+  useEffect(() => {
+    getAllReports();
+  }, []);
 
   return (
     <div className="flex justify-start flex-col m-20">
       <h1 className="text-3xl font-bold underline mb-4">Reports List</h1>
-      <ul className="list-none p-0">
-        {/* reports should be a list from fetchReportsList  */}
-        {/* each link should has its own report type, category */}
-        {reports.map((report) => (
-          <li key={report.id} className="mb-2">
-            <Link
-              to={`/designer`}
-              className="text-blue-500 hover:underline"
-            >
-              {report.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Report Name</TableCell>
+              <TableCell>Report Type</TableCell>
+              <TableCell>Report Category</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {reports.map((report, index) => (
+              <TableRow key={index}>
+                <TableCell>{report.ReportName}</TableCell>
+                <TableCell>{report.ReportVariation}</TableCell>
+                <TableCell>{report.ReportCode}</TableCell>
+                <TableCell>
+                  <Button
+                    component={Link}
+                    to={`/designer/${report.ReportCode}/${report.ReportVariation}`}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    Edit
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

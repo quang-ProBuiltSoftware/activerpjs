@@ -16,3 +16,23 @@
   width: 100%;
   height: 100vh;
 }
+
+#designer-host .gc-modal .gc-btn--accent{
+  background-color: #2e69dc !important;
+}
+
+#designer-host .gc-btn--accent:hover{
+  opacity: 0.9;
+ }
+
+ #designer-host .gc-modal .gc-btn--accent{
+  background-color: #2e69dc !important;
+}
+
+#viewer-host .gc-menu-panel .gc-btn--accent{
+  background-color: #2e69dc !important;
+}
+
+#viewer-host .gc-btn--accent:hover{
+  opacity: 0.9;
+ }

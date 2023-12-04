@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/designer" element={<DesignerPage />} />
+        <Route path="/designer/:code/:variation" element={<DesignerPage />} />
         <Route path="/viewer" element={<Viewer />} />
       </Routes>
     </Router>

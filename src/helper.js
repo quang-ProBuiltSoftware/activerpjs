@@ -1,0 +1,27 @@
+export const reportList = [
+    'GridCustomers',
+    'GridVendors',
+    'GridEmployees',
+    'GridAccounts',
+    'GridJournalEntries',
+    'GridNotesPayable',
+    'GridNotesReceivable',
+    'GridAssetRegister',
+    'GridLiabilityRegister',
+    'GridEquityRegister',
+    'GridIncomeTransactions',
+    'GridExpenseTransactions',
+    'GridAccountRegister',
+    'GridPaymentsPosted',
+    'GridDepositsPosted',
+    'GridReconciliations',
+    'GridProductsServices',
+    'GridInvoiceListing',
+    'GridInvoicePayments',
+    'GridARRegister',
+    'GridBillListing',
+    'GridBillPayments',
+    'GridAPRegister',
+    'GridPayRuns'
+  ];
+  
